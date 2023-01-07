@@ -1,0 +1,1 @@
+SELECT * FROM Cafes as c WHERE c.Name = 'cofix' 
