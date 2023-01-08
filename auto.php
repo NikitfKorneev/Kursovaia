@@ -1,6 +1,5 @@
 <?php
 require("db.php");
-
 if(!empty($_POST)){
     $result = mysqli_query($mysql, "SELECT * FROM registr WHERE login =\"".$_POST['login']."\"");
     if(mysqli_num_rows($result) == 0){
@@ -33,3 +32,5 @@ $content = "
 
 require("visual.php");
 ?>
+
+

@@ -29,6 +29,9 @@ include "db.php";
         background: #b5b5b5;
     }
 </style>
+
+
+
 <body>
     <table>
         <tr>
@@ -39,27 +42,49 @@ include "db.php";
         </tr>
         <p><a href="auto.php">К входу</a></p>
         <?php
+        
+        $content1 = "
+        <form method=\"POST\">
+            <div>
+                <label>Название заведения</label>
+                <input type=\"text\" name=\"Nazvanie\">
+            </div>
 
-            /*
-             * Делаем выборку всех строк из таблицы "products"
-             */
+            <div>
+                <label>Улица</label>
+                <input type=\"text\" class=\"search\" name=\"search\">
+            </div>
 
-            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Name = 'cofix'");
+            <div>
+                <label>Район</label>
+                <input type=\"text\" name=\"Rayon\">
+            </div>
 
-            /*
-             * Преобразовываем полученные данные в нормальный массив
-             */
+            <div>
+                <button type=\"submit\ \">Поиск</button>
+            </div>
+           
+        </form>";
 
+        
+        require("visual.php");
+       
+
+
+
+
+      
+        if ( $_POST['Nazvanie'] <> NULL && $_POST ['Rayon'] <> NULL && $_POST['search'] ){
+            $search = $_POST['search'];
+            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.District = \"".$_POST['Rayon']."\" and c.Name = \"".$_POST['Nazvanie']."\" and c.Address LIKE '%$search%'");    
+        }else 
+        if ( $_POST['Nazvanie'] == NULL){
+        $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Address  = \"".$_POST['Rayon']."\" ");
+        }else{
+        $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Name = \"".$_POST['Nazvanie']."\" ");
+        }
+        
             $products = mysqli_fetch_all($products);
-
-            /*
-             * Перебираем массив и рендерим HTML с данными из массива
-             * Ключ 0 - id
-             * Ключ 1 - title
-             * Ключ 2 - price
-             * Ключ 3 - description
-             */
-
             foreach ($products as $product) {
                 ?>
                 
@@ -68,8 +93,10 @@ include "db.php";
                         <td><?= $product[9] ?></td>
                         <td><?= $product[10] ?></td>
                         <td><?= $product[8] ?></td>
+                        <td><?= $product[7] ?></td>
                     </tr>
                 <?php
+
             }
         ?>
     </table>

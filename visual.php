@@ -12,6 +12,7 @@
             <div id="right">
                 <h1><?=$title?></h1>
                 <?=$content;?>
+                <?=$content1;?>
             </div>
            
     </body>
