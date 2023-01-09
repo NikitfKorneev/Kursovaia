@@ -78,11 +78,24 @@ include "db.php";
             $search = $_POST['search'];
             $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.District = \"".$_POST['Rayon']."\" and c.Name = \"".$_POST['Nazvanie']."\" and c.Address LIKE '%$search%'");    
         }else 
-        if ( $_POST['Nazvanie'] == NULL){
-        $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Address  = \"".$_POST['Rayon']."\" ");
-        }else{
-        $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Name = \"".$_POST['Nazvanie']."\" ");
+        if ( $_POST['Nazvanie'] == NULL && $_POST['search'] == NULL ){
+            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.District  = \"".$_POST['Rayon']."\" ");
+        }else if($_POST['Rayon'] == NULL && $_POST['search'] == NULL ){
+            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Name = \"".$_POST['Nazvanie']."\" ");
+        }else if($_POST['Nazvanie'] == NULL && $_POST['Rayon'] == NULL){
+            $search = $_POST['search'];
+            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Address LIKE '%$search%' ");        
+        }else if($_POST['Nazvanie'] == NULL){
+            $search = $_POST['search'];
+            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.District  = \"".$_POST['Rayon']."\" and c.Address LIKE '%$search%' ");
+        }else if ($_POST['Rayon'] == NULL){
+            $search = $_POST['search'];
+            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Name  = \"".$_POST['Nazvanie']."\" and c.Address LIKE '%$search%' ");
+        }else if($_POST['search'] == NULL){
+            $products = mysqli_query($mysql, "SELECT * FROM Cafes as c WHERE c.Name  = \"".$_POST['Nazvanie']."\" and c.District  = \"".$_POST['Rayon']."\"  "); 
         }
+        
+        
         
             $products = mysqli_fetch_all($products);
             foreach ($products as $product) {
