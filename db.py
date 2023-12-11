@@ -1,0 +1,1 @@
+connect = 'https://vkusnokushay.ru/'

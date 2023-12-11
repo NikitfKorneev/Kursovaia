@@ -6,3 +6,5 @@ $search = $_POST['search'];
         select * from registr
 join Com on registr.id = Com.id_user
 where Com.id_user = '61'
+
+
